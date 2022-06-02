@@ -1,12 +1,18 @@
 ﻿using Contracts;
 using Entities.Models;
 using LoggerService;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Repository;
+using Server.Auth;
+using Server.Filters;
+
+
 
 namespace Server.Extensions
 {
@@ -47,6 +53,39 @@ namespace Server.Extensions
         {
             services.AddScoped<IRepositoryManager, RepositoryManager>();
         }
+        public static void ConfigureValidationFilter(this IServiceCollection services)
+        {
+            services.AddScoped<ValidationFilterAttribute>();
+        }
+        public static void ConfigureJWT(this IServiceCollection services)
+        {
+            services.AddAuthentication(opt=> {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                   .AddJwtBearer(options =>
+                   {
+
+                       options.RequireHttpsMetadata = false;
+                       options.TokenValidationParameters = new TokenValidationParameters
+                       {
+                            
+                           ValidateIssuer = true,
+                           ValidIssuer = AuthOptions.ISSUER,
+                           ValidateAudience = true,
+                            // установка потребителя токена
+                           ValidAudience = AuthOptions.AUDIENCE,
+                            // будет ли валидироваться время существования
+                           ValidateLifetime = true,
+
+                            // установка ключа безопасности
+                           IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                            // валидация ключа безопасности
+                           ValidateIssuerSigningKey = true,
+                       };
+                   });
+        }
+
     }
 }
 

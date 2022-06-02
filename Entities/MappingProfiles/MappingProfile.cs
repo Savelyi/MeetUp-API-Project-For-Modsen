@@ -15,7 +15,7 @@ namespace Entities.MappingProfiles
         public MappingProfile()
         {
             CreateMap<Event, EventToShowDto>();
-            CreateMap<UserForRegistrationDto, User>();
+            CreateMap<UserForSignUpDto, User>();
         }
     }
 }

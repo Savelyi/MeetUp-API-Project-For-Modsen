@@ -13,6 +13,8 @@ namespace Entities.Models
         {
             Events = new List<Event>();
         }
+        public string FullName { get; set; }
         public IEnumerable<Event> Events { get; set; }
+
     }
 }

@@ -4,14 +4,16 @@ using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Server.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20220602162623_AddingRoles")]
+    partial class AddingRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,9 +67,6 @@ namespace Server.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -144,15 +143,15 @@ namespace Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "20077bb6-6e19-439d-90f6-d6e5beb5ad76",
-                            ConcurrencyStamp = "c22e1920-29b8-4c92-ae47-b20ba31a1e32",
+                            Id = "acf67113-fbcd-4bc4-88ce-4fd9d4872ee0",
+                            ConcurrencyStamp = "b72c148e-7772-4e4c-9988-166b78fd799f",
                             Name = "Client",
                             NormalizedName = "CLIENT"
                         },
                         new
                         {
-                            Id = "0fd0d0d5-becd-4ab4-91e7-a29e1308aa91",
-                            ConcurrencyStamp = "77e43d0e-cb8a-4241-833d-41c71a304f8c",
+                            Id = "177e87a0-22ff-4988-a3b7-e44f984b93d3",
+                            ConcurrencyStamp = "1422f7c2-8813-4ed6-8da0-db56233433c0",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

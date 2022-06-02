@@ -14,12 +14,13 @@ namespace Entities.Models
         public RepositoryContext(DbContextOptions options)
         : base(options)
         {
-
+            
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new EventConfiguration());
+            builder.ApplyConfiguration(new RoleConfiguration());
         }
         public DbSet<Event> Events { get; set; }
 

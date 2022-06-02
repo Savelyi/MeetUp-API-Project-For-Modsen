@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Entities.DTO;
+using Entities.DTO.EventDto;
+using Entities.DTO.UserDto;
 using Entities.Models;
 using System;
 using System.Collections.Generic;
@@ -9,11 +10,12 @@ using System.Threading.Tasks;
 
 namespace Entities.MappingProfiles
 {
-    public class EventMappingProfile : Profile
+    public class MappingProfile : Profile
     {
-        public EventMappingProfile()
+        public MappingProfile()
         {
             CreateMap<Event, EventToShowDto>();
+            CreateMap<UserForRegistrationDto, User>();
         }
     }
 }

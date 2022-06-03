@@ -21,7 +21,7 @@ namespace Entities.Models
         {
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new EventConfiguration());
-            builder.ApplyConfiguration(new RoleConfiguration());
+            
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

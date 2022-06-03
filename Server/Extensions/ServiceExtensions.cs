@@ -29,7 +29,7 @@ namespace Server.Extensions
         }
         public static void ConfigureIdentity(this IServiceCollection services)
         {
-            var builder = services.AddIdentityCore<User>(o =>
+            var builder = services.AddIdentity<User,IdentityRole>(o =>
             {
                 o.Password.RequireDigit = true;
                 o.Password.RequireLowercase = false;
@@ -59,10 +59,12 @@ namespace Server.Extensions
         }
         public static void ConfigureJWT(this IServiceCollection services)
         {
+            
             services.AddAuthentication(opt=> {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
+                
                    .AddJwtBearer(options =>
                    {
 

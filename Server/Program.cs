@@ -21,7 +21,8 @@ namespace Server
             {
                 var services = scope.ServiceProvider;
                 var userManager = services.GetRequiredService<UserManager<User>>();
-                await DbInitializer.InitializeAsync(userManager);
+                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                await DbInitializer.InitializeAsync(userManager,roleManager);
             }
             host.Run();
         }

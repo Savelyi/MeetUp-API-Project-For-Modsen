@@ -22,9 +22,11 @@ namespace Server.Auth
 
         public async Task<string> CreateToken()
         {
+
             var claims = new List<Claim>
                 {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, await _userManager.GetUserNameAsync(_user)),
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, _user.UserName),
+                    new Claim("Id",_user.Id)
                 };
             var roles = await _userManager.GetRolesAsync(_user);
             foreach (var role in roles)

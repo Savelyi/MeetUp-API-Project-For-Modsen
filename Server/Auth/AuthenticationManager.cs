@@ -15,6 +15,11 @@ namespace Server.Auth
     {
         readonly UserManager<User> _userManager;
         User _user;
+        public AuthenticationManager(UserManager<User> userManager)
+        {
+            _userManager = userManager;
+        }
+
         public async Task<string> CreateToken()
         {
             var claims = new List<Claim>
@@ -46,7 +51,7 @@ namespace Server.Auth
         public async Task<bool> ValidateUser(UserForSignInDto user)
         {
             _user = await _userManager.FindByNameAsync(user.UserName);
-            return (_user != null && await _userManager.CheckPasswordAsync(_user, user.Password)) ;
+            return (_user != null && await _userManager.CheckPasswordAsync(_user, user.Password));
         }
     }
 }

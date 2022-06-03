@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.MappingProfiles
+namespace Server.MappingProfiles
 {
     public class MappingProfile : Profile
     {

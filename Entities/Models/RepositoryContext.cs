@@ -11,6 +11,7 @@ namespace Entities.Models
 {
     public class RepositoryContext : IdentityDbContext<User>
     {
+        public DbSet<Event> Events { get; set; }
         public RepositoryContext(DbContextOptions options)
         : base(options)
         {
@@ -22,7 +23,11 @@ namespace Entities.Models
             builder.ApplyConfiguration(new EventConfiguration());
             builder.ApplyConfiguration(new RoleConfiguration());
         }
-        public DbSet<Event> Events { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseLazyLoadingProxies();
+        }
     }
 }

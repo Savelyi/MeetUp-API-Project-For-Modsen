@@ -10,7 +10,7 @@ namespace Entities.Models
     public class User : IdentityUser
     {
         public string FullName { get; set; }
-        public IEnumerable<Event> Events { get; set; }
+        public virtual ICollection<Event> Events { get; set; }
 
     }
 }

@@ -10,12 +10,12 @@ namespace Entities.DTO.UserDto
     public class UserForSignInDto
     {
         [Required(ErrorMessage = "Password is required")]
-        [MaxLength(15)]
-        [MinLength(5)]
+        [MaxLength(20)]
+        [MinLength(6)]
         public string Password { get; set; }
         [Required(ErrorMessage = "UserName field is required")]
-        [MaxLength(15)]
-        [MinLength(5)]
+        [MaxLength(20)]
+        
         public string UserName { get; set; }
 
     }

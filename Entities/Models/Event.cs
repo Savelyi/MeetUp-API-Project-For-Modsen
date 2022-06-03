@@ -13,7 +13,7 @@ namespace Entities.Models
         public DateTime Time { get; set; }
         public string Place { get; set; }
         public string OrganizerId { get; set; }
-        public User Organizer{ get; set; }
+        public virtual User Organizer{ get; set; }
 
     }
 }

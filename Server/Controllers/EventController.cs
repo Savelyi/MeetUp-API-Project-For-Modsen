@@ -32,10 +32,19 @@ namespace Server.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("Show")]
+        [HttpGet("ShowAll")]
         public async Task<IActionResult> ShowEvents()
         {
-            return Ok();
+            var _events = _mapper.Map<IEnumerable<EventToShowDto>>(await _repositoryManager.Events.GetAllEventsAsync(true));
+            return Ok(_events);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("ShowById/{eventId}")]
+        public async Task<IActionResult> GetEventById([FromRoute] string eventId)
+        {
+            var _event = _mapper.Map<EventToShowDto>(await _repositoryManager.Events.GetEventByIdAsync(Guid.Parse(eventId), true));
+            return Ok(_event);
         }
 
         [ServiceFilter(typeof(ValidationFilterAttribute))]
@@ -43,7 +52,7 @@ namespace Server.Controllers
         public async Task<IActionResult> CreateEvent([FromBody] EventToCreateDto eventDto)
         {
             var _event = _mapper.Map<Event>(eventDto);
-            _event.OrganizerId = User.FindFirst(e=>e.Type=="Id").Value;
+            _event.OrganizerId = User.FindFirst(e => e.Type == "Id").Value;
             _repositoryManager.Events.CreateEvent(_event);
             await _repositoryManager.SaveAsync();
             return StatusCode(201);

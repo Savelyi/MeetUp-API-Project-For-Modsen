@@ -47,7 +47,9 @@ namespace Server
             services.AddScoped<IAuthenticationManager, AuthenticationManager>();
             services.ConfigureJWT();
             services.ConfigureValidationFilter();
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
         }
 

@@ -13,7 +13,8 @@ namespace Entities.DTO.EventDto
         [MaxLength(20)]
         public string Name { get; set; }
         [Required(ErrorMessage ="Time is required")]
-        public string Time { get; set; }
+        [DataType(DataType.DateTime)]
+        public DateTime Time { get; set; }
         [Required(ErrorMessage ="Place is required")]
         public string Place { get; set; }
     }

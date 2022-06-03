@@ -9,8 +9,9 @@ namespace Server
     public class DbInitializer
     {
         const string adminUserName= "admin";
+        const string adminFullName= "adminName";
         const string password = "123456";
-        const string AdminEmail = "Savelyi@gmail.com";
+        const string AdminEmail = "admin@gmail.com";
         public static async Task InitializeAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             if (await roleManager.FindByNameAsync("admin") == null)
@@ -24,7 +25,7 @@ namespace Server
 
             if (await userManager.FindByNameAsync(adminUserName) == null)
             {
-                User admin = new User { UserName = adminUserName, Email=AdminEmail};
+                User admin = new User { UserName = adminUserName, Email=AdminEmail, FullName = adminFullName};
                 var result= await userManager.CreateAsync(admin,password);
                 if (result.Succeeded)
                 {

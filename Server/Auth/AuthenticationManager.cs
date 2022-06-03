@@ -26,7 +26,8 @@ namespace Server.Auth
             var claims = new List<Claim>
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, _user.UserName),
-                    new Claim("Id",_user.Id)
+                    new Claim("Id",_user.Id),
+                    new Claim("FullName",_user.FullName)
                 };
             var roles = await _userManager.GetRolesAsync(_user);
             foreach (var role in roles)

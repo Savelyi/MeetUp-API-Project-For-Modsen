@@ -29,7 +29,7 @@ namespace Server.Controllers
 
         [HttpPost("SignUp")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> SignUp(UserForSignUpDto userDto)
+        public async Task<IActionResult> SignUp([FromBody]UserForSignUpDto userDto)
         {
             var user = _mapper.Map<User>(userDto);
             var result = await _userManager.CreateAsync(user, userDto.Password);

@@ -9,10 +9,6 @@ namespace Entities.Models
 {
     public class User : IdentityUser
     {
-        public User()
-        {
-            Events = new List<Event>();
-        }
         public string FullName { get; set; }
         public IEnumerable<Event> Events { get; set; }
 

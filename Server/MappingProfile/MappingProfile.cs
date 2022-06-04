@@ -15,6 +15,8 @@ namespace Server.MappingProfiles
         public MappingProfile()
         {
             CreateMap<EventToCreateDto, Event>()
+                .ForMember(e => e.Time, opt => opt.MapFrom(src => src.Time)); 
+            CreateMap<EventToUpdateDto, Event>()
                 .ForMember(e => e.Time, opt => opt.MapFrom(src => src.Time));
             CreateMap<Event, EventToShowDto>()
                 .ForMember(e => e.OrganizerName, opt => opt.MapFrom(src => src.Organizer.FullName));

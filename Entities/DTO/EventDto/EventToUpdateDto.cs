@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Entities.DTO.EventDto
 {
-    public class EventToCreateDto : EventToHandleDto
+    public class EventToUpdateDto : EventToHandleDto
     {
        
     }

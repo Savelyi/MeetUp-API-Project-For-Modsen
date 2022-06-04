@@ -29,7 +29,7 @@ namespace Server
                 var result= await userManager.CreateAsync(admin,password);
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(admin, "Admin");
+                    await userManager.AddToRoleAsync(admin, "admin");
 
                 }
             }

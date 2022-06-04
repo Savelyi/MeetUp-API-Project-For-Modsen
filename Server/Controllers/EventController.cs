@@ -33,7 +33,7 @@ namespace Server.Controllers
 
         [AllowAnonymous]
         [HttpGet("ShowAll")]
-        public async Task<IActionResult> ShowEvents()
+        public async Task<IActionResult> GetAllEventsAsync()
         {
             var _events = _mapper.Map<IEnumerable<EventToShowDto>>(await _repositoryManager.Events.GetAllEventsAsync(true));
             return Ok(_events);
@@ -41,15 +41,15 @@ namespace Server.Controllers
 
         [AllowAnonymous]
         [HttpGet("ShowById/{eventId}")]
-        public async Task<IActionResult> GetEventById([FromRoute] string eventId)
+        public async Task<IActionResult> GetEventByIdAsync([FromRoute] string eventId)
         {
             var _event = _mapper.Map<EventToShowDto>(await _repositoryManager.Events.GetEventByIdAsync(Guid.Parse(eventId), true));
-            return Ok(_event);
+            return (_event != null) ? Ok(_event) : NotFound("There is no event with such Id");
         }
 
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [HttpPost("Create")]
-        public async Task<IActionResult> CreateEvent([FromBody] EventToCreateDto eventDto)
+        public async Task<IActionResult> CreateEventAsync([FromBody] EventToCreateDto eventDto)
         {
             var _event = _mapper.Map<Event>(eventDto);
             _event.OrganizerId = User.FindFirst(e => e.Type == "Id").Value;
@@ -58,6 +58,76 @@ namespace Server.Controllers
             return StatusCode(201);
         }
 
+        [HttpDelete("DeleteAny/{eventId}")]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> DeleteAnyEventAsync([FromRoute] string eventId)
+        {
+            var _event = await _repositoryManager.Events.GetEventByIdAsync(Guid.Parse(eventId), false);
+            if (_event == null)
+            {
+                return NotFound("There is no event with such Id");
+            }
+            _repositoryManager.Events.DeleteEvent(_event);
+            await _repositoryManager.SaveAsync();
+            return NoContent();
+        }
+
+
+        [HttpDelete("Delete/{eventId}")]
+        public async Task<IActionResult> DeleteUserEventAsync([FromRoute] string eventId)
+        {
+            var _event = await _repositoryManager.Events.GetEventByIdAsync(Guid.Parse(eventId), false);
+            if (_event == null)
+            {
+                return NotFound("There is no event with such Id");
+            }
+            if(_event.OrganizerId!= User.FindFirst(e => e.Type == "Id").Value)
+            {
+                return Forbid();
+            }
+            _repositoryManager.Events.DeleteEvent(_event);
+            await _repositoryManager.SaveAsync();
+            return NoContent();
+        }
+
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [HttpPut("UpdateAny/{eventId}")]
+        [Authorize(Roles ="admin")]
+        public async Task<IActionResult> UpdateAnyEventAsync([FromBody] EventToUpdateDto eventDto, [FromRoute] string eventId)
+        {
+            var _event = await _repositoryManager.Events.GetEventByIdAsync(Guid.Parse(eventId), false);
+            if (_event == null)
+            {
+                return NotFound("There is no event with such Id");
+            }
+            var _eventToUpdate = _mapper.Map<Event>(eventDto);
+            _eventToUpdate.Id = Guid.Parse(eventId);
+            _eventToUpdate.OrganizerId = _event.OrganizerId;
+            _repositoryManager.Events.UpdateEvent(_eventToUpdate);
+            await _repositoryManager.SaveAsync();
+            return NoContent();
+        }
+
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [HttpPut("Update/{eventId}")]
+        public async Task<IActionResult> UpdateUserEventAsync([FromBody] EventToUpdateDto eventDto, [FromRoute] string eventId)
+        {
+            var _event = await _repositoryManager.Events.GetEventByIdAsync(Guid.Parse(eventId), false);
+            if (_event == null)
+            {
+                return NotFound("There is no event with such Id");
+            }
+            if (_event.OrganizerId != User.FindFirst(e => e.Type == "Id").Value)
+            {
+                return Forbid();
+            }
+            var _eventToUpdate = _mapper.Map<Event>(eventDto);
+            _eventToUpdate.Id = Guid.Parse(eventId);
+            _eventToUpdate.OrganizerId = _event.OrganizerId;
+            _repositoryManager.Events.UpdateEvent(_eventToUpdate);
+            await _repositoryManager.SaveAsync();
+            return NoContent();
+        }
 
     }
 }

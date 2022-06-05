@@ -2,10 +2,12 @@
 using Contracts;
 using Entities.DTO.EventDto;
 using Entities.Models;
+using Entities.RequestFeatures;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Server.Filters;
 using System;
 using System.Collections.Generic;
@@ -33,10 +35,12 @@ namespace Server.Controllers
 
         [AllowAnonymous]
         [HttpGet("ShowAll")]
-        public async Task<IActionResult> GetAllEventsAsync()
+        public async Task<IActionResult> GetAllEventsAsync([FromQuery]EventParameters eventParameters)
         {
-            var _events = _mapper.Map<IEnumerable<EventToShowDto>>(await _repositoryManager.Events.GetAllEventsAsync(true));
-            return Ok(_events);
+            var _events = await _repositoryManager.Events.GetAllEventsAsync(eventParameters,true);
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(_events.MetaData));
+            var _eventsDto = _mapper.Map<IEnumerable<EventToShowDto>>(_events);
+            return Ok(_eventsDto);
         }
 
         [AllowAnonymous]

@@ -1,0 +1,319 @@
+{
+	"info": {
+		"_postman_id": "3f9ac801-a2fe-496c-b4f7-9af1d36c44f1",
+		"name": "ModsenApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19883251"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "SignUp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"UserName\":\"Savchon\",\r\n   \"FullName\":\"Svirskyi Savelyi\",\r\n   \"Password\":\"111111\",\r\n   \"Email\":\"Savhon@gmail.com\",\r\n   \"Role\":\"Admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/Account/SignUp",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"Account",
+								"SignUp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignIn",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"UserName\":\"admin\",\r\n   \"Password\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/Account/SignIn",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"Account",
+								"SignIn"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "CreateEvent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiU2F2Y2hvbiIsIklkIjoiYThjY2M2NzctZGZjMy00YjUyLWI1MmYtODg5ZjYxM2U5MGRlIiwiRnVsbE5hbWUiOiJTdmlyc2t5aSBTYXZlbHlpIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoidXNlciIsIm5iZiI6MTY1NDQyMjg1NCwiZXhwIjoxNjU0NDI0NjU0LCJpc3MiOiJNb2RzZW4iLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.gqAEevA7uxtyGpvXlreZLqC1XAOgfhgIy5PUnx509JQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\":\"SavelyiEvent\",\r\n    \"Place\":\"newPlace\",\r\n    \"Time\":\"8.21.2022 15:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/Event/Create",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"Event",
+								"Create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ShowEvents",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/Event/ShowAll?pageNumber=1&pageSize=3",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"Event",
+								"ShowAll"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ShowEventById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/Event/ShowById/9d3f661c-fa31-494c-cf0b-08da45a8a688",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"Event",
+								"ShowById",
+								"9d3f661c-fa31-494c-cf0b-08da45a8a688"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteAnyEvent(ForAdmins)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/Event/DeleteAny/ff2d7cbb-e7ba-40b3-182d-08da46557177",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"Event",
+								"DeleteAny",
+								"ff2d7cbb-e7ba-40b3-182d-08da46557177"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateAnyEvent(ForAdmins))",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJJZCI6ImQ2YmQ4Y2NkLWJhYWQtNGUxMS1iZmFhLTFkODA3OGY1OWVlMiIsIkZ1bGxOYW1lIjoiYWRtaW5OYW1lIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJuYmYiOjE2NTQzNjQwMTgsImV4cCI6MTY1NDM2NTgxOCwiaXNzIjoiTW9kc2VuIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMSJ9.OGPaOOUegjQTR3B5cI_jCV73FT_Lq2oyzm3N07cosI8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\":\"UpdatedEvent\",\r\n    \"Place\":\"UpdatedPlace\",\r\n    \"Time\":\"3.18.2022 01:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/Event/UpdateAny/ccc3cb8e-1de8-47c2-6ec4-08da4650f0bc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"Event",
+								"UpdateAny",
+								"ccc3cb8e-1de8-47c2-6ec4-08da4650f0bc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteEvent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/Event/Delete/b68f9500-0b10-4820-f743-08da46d97118",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"Event",
+								"Delete",
+								"b68f9500-0b10-4820-f743-08da46d97118"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateEvent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\":\"UpdatedEventByUser\",\r\n    \"Place\":\"UpdatedPlaceByUser\",\r\n    \"Time\":\"3.18.2022 01:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/Event/Update/154139e0-2917-4331-3c77-08da4656ea8e",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"Event",
+								"Update",
+								"154139e0-2917-4331-3c77-08da4656ea8e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -40,6 +40,7 @@ namespace Server
             services.ConfigureSqlContext(Configuration);
             services.ConfigureRepositoryManager();
             services.AddAutoMapper(typeof(Startup));
+            services.ConfigureSwagger();
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
@@ -65,6 +66,12 @@ namespace Server
             {
                 app.UseHsts();
             }
+            app.UseSwagger();
+            app.UseSwaggerUI(s =>
+            {
+                s.SwaggerEndpoint("/swagger/v1/swagger.json", "MeetUp Api");
+
+            });
             app.ConfigureExceptionHandler(logger);
             app.UseStaticFiles();
             app.UseHttpsRedirection();

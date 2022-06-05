@@ -27,6 +27,19 @@ namespace Server.Controllers
             _authenticationManger = authenticationManger;
         }
 
+        /// <summary>
+        /// SignUp
+        /// </summary>
+        /// <param name="userDto"></param>
+        /// <returns></returns>
+        /// <response code="400">Some fields in Model are nullable or error was occured while adding new User in DB</response>
+        /// <response code="201">User Created</response>
+        /// <response code="422">Model Validation Error</response>
+        /// <response code="500">Internal Server Error</response>
+        [ProducesResponseType(400)]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(422)]
+        [ProducesResponseType(500)]
         [HttpPost("SignUp")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> SignUp([FromBody]UserForSignUpDto userDto)
@@ -45,6 +58,21 @@ namespace Server.Controllers
             return StatusCode(201);
         }
 
+        /// <summary>
+        /// Sign In 
+        /// </summary>
+        /// <param name="userDto"></param>
+        /// <returns>UserName And JWT</returns>
+        /// <response code="200">User Signed in and got JWT</response>
+        /// <response code="404">Unauthorized</response>
+        /// <response code="400">Some fields in Model are nullable</response>
+        /// <response code="422">Model Validation Error</response>
+        /// <response code="500">Internal Server Error</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(422)]
+        [ProducesResponseType(500)]
         [HttpPost("SignIn")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> Authenticate(UserForSignInDto userDto)
